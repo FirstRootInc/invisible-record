@@ -7,6 +7,7 @@ ActiveRecord::Schema.define do
     t.string :title
     t.string :body
     t.integer :likes
+    t.datetime :deleted_at
 
     t.timestamps
   end

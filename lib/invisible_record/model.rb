@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "helper"
-
 module InvisibleRecord
   # Add invisible behavior to an ActiveRecord Model
   module Model
@@ -15,7 +13,23 @@ module InvisibleRecord
           end
         end
 
-        Helper.define_attribute_methods attribute_names
+        attribute_names.each do |attribute|
+          define_method attribute do |*_args|
+            return attributes["deleted_at"] if attribute == "deleted_at"
+
+            if attributes["deleted_at"].present?
+              nil
+            else
+              attributes[attribute]
+            end
+          end
+
+          next if respond_to? attribute
+
+          define_method "hidden_#{attribute}" do |*_args|
+            attributes[attribute]
+          end
+        end
 
         def restore
           self.deleted_at = nil
