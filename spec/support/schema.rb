@@ -12,4 +12,10 @@ ActiveRecord::Schema.define do
     t.timestamps
   end
 
+  create_table :folders, force: true do |t|
+    t.string :name
+    t.datetime :archived_at
+
+    t.timestamps
+  end
 end

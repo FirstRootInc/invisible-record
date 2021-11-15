@@ -21,4 +21,15 @@ RSpec.describe InvisibleRecord::Model do
     expect(post.title).to be_nil
     expect(post.body).to be_nil
   end
+
+  it "hides attributes when using another deleted timestamp attribute column" do
+    folder = Folder.new(name: "MyFolder")
+    expect(folder.name).to eq("MyFolder")
+    archived_datetime = DateTime.now
+    folder.archived_at = archived_datetime
+    expect(folder).to respond_to(:restore)
+    expect(folder).to respond_to(:hidden_name)
+    expect(folder.hidden_name).to eq("MyFolder")
+    expect(folder.name).to be_nil
+  end
 end
