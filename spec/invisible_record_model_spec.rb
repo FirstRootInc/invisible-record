@@ -33,10 +33,10 @@ RSpec.describe InvisibleRecord::Model do
     expect(folder.name).to be_nil
   end
 
-  it "can restore a hidden record" do
+  it "can restore a hidden record that was soft-deleted" do
     post = Post.new(title: "Hello", body: "World")
     deleted_datetime = DateTime.now
-    post.deleted_at = deleted_datetime
+    post.soft_delete(datetime: deleted_datetime)
     expect(post.deleted_at).to eq(deleted_datetime)
     expect(post).to respond_to(:restore)
     expect(post.title).to be_nil

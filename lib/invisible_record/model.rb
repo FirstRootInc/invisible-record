@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "invisible_record/helper"
+
 module InvisibleRecord
   # Add invisible behavior to an ActiveRecord Model
   module Model
@@ -15,31 +17,9 @@ module InvisibleRecord
           end
         end
 
-        attribute_names.each do |attribute|
-          define_method attribute do |*_args|
-            return attributes[deleted_timestamp_attr] if attribute == deleted_timestamp_attr
+        Helper.define_hidden_attributes self, deleted_ts_attr: deleted_timestamp_attr
 
-            if attributes[deleted_timestamp_attr].present?
-              nil
-            else
-              attributes[attribute]
-            end
-          end
-
-          define_method "hidden_#{attribute}" do |*_args|
-            attributes[attribute]
-          end
-        end
-
-        define_method "restore" do |*_args|
-          assign_timestamp = "#{deleted_timestamp_attr}="
-          send(assign_timestamp, nil)
-        end
-
-        define_method "restore!" do |*_args|
-          restore
-          save!
-        end
+        Helper.define_actions self, deleted_ts_attr: deleted_timestamp_attr
       end
     end
   end
