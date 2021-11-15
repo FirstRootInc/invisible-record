@@ -32,4 +32,18 @@ RSpec.describe InvisibleRecord::Model do
     expect(folder.hidden_name).to eq("MyFolder")
     expect(folder.name).to be_nil
   end
+
+  it "can restore a hidden record" do
+    post = Post.new(title: "Hello", body: "World")
+    deleted_datetime = DateTime.now
+    post.deleted_at = deleted_datetime
+    expect(post.deleted_at).to eq(deleted_datetime)
+    expect(post).to respond_to(:restore)
+    expect(post.title).to be_nil
+    expect(post.body).to be_nil
+    post.restore
+    expect(post.title).to eq("Hello")
+    expect(post.body).to eq("World")
+    expect(post.deleted_at).to be_nil
+  end
 end
