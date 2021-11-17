@@ -46,4 +46,12 @@ RSpec.describe InvisibleRecord::Model do
     expect(post.body).to eq("World")
     expect(post.deleted_at).to be_nil
   end
+
+  it "can soft delete records without specifying a datetime" do
+    post = Post.new(title: "Hello", body: "World")
+    post.soft_delete
+    expect(post.deleted_at).to_not be_nil
+    expect(post.title).to be_nil
+    expect(post.body).to be_nil
+  end
 end

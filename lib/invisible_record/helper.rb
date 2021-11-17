@@ -15,7 +15,7 @@ module InvisibleRecord
       end
 
       klass.define_method "soft_delete" do |*args|
-        options = args.last
+        options = args.last || {}
         options[:datetime] ||= DateTime.now
         assign_timestamp = "#{deleted_ts_attr}="
         send(assign_timestamp, options[:datetime])
