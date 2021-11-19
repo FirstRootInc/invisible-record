@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    invisible_record (0.1.2)
+    invisible_record (0.1.3)
       activemodel (>= 5)
       activerecord (>= 5)
 
