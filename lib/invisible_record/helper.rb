@@ -21,8 +21,10 @@ module InvisibleRecord
         send(assign_timestamp, options[:datetime])
       end
 
-      klass.define_method "soft_delete!" do |*_args|
-        soft_delete
+      klass.define_method "soft_delete!" do |*args|
+        options = args.last || {}
+        options[:datetime] ||= DateTime.now
+        soft_delete(datetime: options[:datetime])
         save!
       end
     end

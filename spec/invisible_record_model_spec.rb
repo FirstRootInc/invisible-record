@@ -54,4 +54,16 @@ RSpec.describe InvisibleRecord::Model do
     expect(post.title).to be_nil
     expect(post.body).to be_nil
   end
+
+  it "can soft_delete! and restore!" do
+    post = Post.new(title: "Hello")
+    datetime = DateTime.now - 1.day
+    post.soft_delete!(datetime: datetime)
+    expect(post.deleted_at).to eq(datetime)
+    expect(post.title).to be_nil
+    post.restore!
+    expect(post.deleted_at).to be_nil
+    expect(post.title).to eq("Hello")
+    expect(post).to be_persisted
+  end
 end
