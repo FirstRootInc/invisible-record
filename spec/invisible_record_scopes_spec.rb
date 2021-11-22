@@ -17,7 +17,7 @@ RSpec.describe "Scopes for Invisible Record" do
   it "should omit deleted records if the deleted attribute name is different" do
     Folder.create!(name: "Hello")
     existing_folder = Folder.create!(name: "Existing")
-    deleted_folder = Folder.create!(name: "Deleted", deleted_at: DateTime.now)
+    deleted_folder = Folder.create!(name: "Deleted", archived_at: DateTime.now)
 
     expect(Folder.all.count).to eq(3)
     expect(Folder.without_deleted.count).to eq(2)
