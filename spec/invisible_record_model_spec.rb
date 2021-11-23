@@ -39,5 +39,6 @@ RSpec.describe InvisibleRecord::Model do
     expect(post.title).to be_nil
     expect(post.id).to_not be_nil
     expect(post.deleted_at).to_not be_nil
+    post.destroy!
   end
 end

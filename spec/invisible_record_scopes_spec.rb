@@ -12,6 +12,7 @@ RSpec.describe "Scopes for Invisible Record" do
     expect(Post.without_deleted.count).to eq(2)
     expect(Post.without_deleted).to_not include(deleted_post)
     expect(Post.without_deleted).to include(existing_post)
+    Post.destroy_all
   end
 
   it "should omit deleted records if the deleted attribute name is different" do
@@ -23,5 +24,6 @@ RSpec.describe "Scopes for Invisible Record" do
     expect(Folder.without_deleted.count).to eq(2)
     expect(Folder.without_deleted).to_not include(deleted_folder)
     expect(Folder.without_deleted).to include(existing_folder)
+    Folder.destroy_all
   end
 end

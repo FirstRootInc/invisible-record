@@ -32,10 +32,8 @@ module InvisibleRecord
     def self.define_hidden_attributes(klass, deleted_ts_attr:)
       klass.attribute_names.each do |attribute|
         klass.define_method attribute do |*_args|
-          protected_attributes = ["id", deleted_ts_attr]
-          protected_attributes.each do |protected_attr_name|
-            return attributes[protected_attr_name] if attribute == protected_attr_name
-          end
+          return attributes["id"] if attribute == "id"
+          return attributes[deleted_ts_attr] if attribute == deleted_ts_attr
 
           if attributes[deleted_ts_attr].present?
             nil

@@ -35,5 +35,6 @@ RSpec.describe "Actions for Invisible Record" do
     expect(post.deleted_at).to be_nil
     expect(post.title).to eq("Hello")
     expect(post).to be_persisted
+    post.destroy!
   end
 end
