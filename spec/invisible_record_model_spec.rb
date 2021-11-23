@@ -32,4 +32,12 @@ RSpec.describe InvisibleRecord::Model do
     expect(folder.hidden_name).to eq("MyFolder")
     expect(folder.name).to be_nil
   end
+
+  it "doesn't hide deleted_at nor id of the deleted record" do
+    post = Post.create!(title: "Hello")
+    post.soft_delete!
+    expect(post.title).to be_nil
+    expect(post.id).to_not be_nil
+    expect(post.deleted_at).to_not be_nil
+  end
 end
