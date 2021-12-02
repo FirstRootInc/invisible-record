@@ -13,8 +13,8 @@ module InvisibleRecord
 
       def define_default_scopes(deleted_ts_attr:)
         default_scope { where(deleted_ts_attr => nil) }
-        scope :include_deleted, -> { unscoped.all }
-        scope :deleted, -> { unscoped.where.not(deleted_ts_attr => nil) }
+        scope :include_deleted, -> { unscope(where: deleted_ts_attr.to_sym) }
+        scope :deleted, -> { unscope(where: deleted_ts_attr.to_sym).where.not(deleted_ts_attr => nil) }
       end
     end
   end
